@@ -1,0 +1,39 @@
+/* استایل برای Navbar */
+.navbar {
+    background-color: #eeeded;
+    /* border-right: 2px solid; */
+    /* box-shadow: 2px 0 10px rgba(242, 238, 238, 0.1); */
+    transition: all 0.3s ease-in-out;
+    /* width: -16px; */
+    padding: 16px;
+    /* margin: 5px; */
+    margin-bottom: 5px;
+    border-radius: 12px; /* 🔥 اضافه کردن گوشه‌های گرد */
+}
+
+/* استایل برای لینک‌های Navbar */
+.nav-link {
+    display: block;
+    color: black;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* دکمه‌های Navbar در موبایل */
+.navbar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.navbar-title {
+    color: white;
+    font-weight: bold;
+}
