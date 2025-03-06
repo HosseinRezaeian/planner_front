@@ -1,15 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { apiSlice } from '../features/TodoApi';
 import { apinoteSlice } from '../features/NoteApi';
+import { apiCreatePlace } from '../features/Createplace';
 
-export const store = configureStore({
+
+const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     [apinoteSlice.reducerPath]: apinoteSlice.reducer,
+    [apiCreatePlace.reducerPath]: apiCreatePlace.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
+    getDefaultMiddleware().concat(apiSlice.middleware, apinoteSlice.middleware),
 });
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export default store;

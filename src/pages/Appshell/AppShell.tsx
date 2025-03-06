@@ -2,7 +2,7 @@ import { AppShell, Burger, Text, Group, Stack } from "@mantine/core";
 import { Outlet } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 import MenuAppshell from "./menuAppshell";
-import "./appshell.css"; // 📌 ایمپورت فایل CSS
+import "../../style/appshell.css"; 
 function AppView() {
     const [opened, { toggle, close }] = useDisclosure(false);
 
