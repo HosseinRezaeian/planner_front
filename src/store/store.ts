@@ -11,6 +11,9 @@ const store = configureStore({
     [apiCreatePlace.reducerPath]: apiCreatePlace.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware, apinoteSlice.middleware),
+    getDefaultMiddleware()
+      .concat(apiSlice.middleware)
+      .concat(apinoteSlice.middleware)
+      .concat(apiCreatePlace.middleware),
 });
 export default store;

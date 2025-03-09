@@ -1,0 +1,26 @@
+
+
+
+.notes {
+    display: block;
+    color: black;
+    text-decoration: none;
+    padding: 15px;
+    font-size: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center; 
+    gap: 4px;
+    transition: background 0.2s;
+    margin-left: 4px; 
+
+
+  
+}
+
+/* فایل CSS شما */
+.notes:hover {
+    background-color: transparent !important; /* غیرفعال کردن تغییر پس‌زمینه در hover */
+    color: inherit !important; /* غیرفعال کردن تغییر رنگ متن در hover */
+  }
+  

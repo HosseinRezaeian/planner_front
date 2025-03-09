@@ -9,31 +9,36 @@ export interface Note{
     content:string
     
 }
-export interface NoteCategory{
+export interface Folder{
     id:number,
     name:string,
     description:string
     notes?:Note[]
 
 }
-
+const sapce = localStorage.getItem('select_space');
+console.log("get spase",sapce);
+if(!sapce){
+    console.log("cant find space");
+}
 export const apinoteSlice = createApi({
     reducerPath:'noteCat',
     baseQuery: baseQueryAccessToken,
-    tagTypes: ['NoteCategory'],
+    tagTypes: ['NoteFolder'],
+    
 
     endpoints:(builder)=>({
-        getNoteCategorys: builder.query<NoteCategory[], void>({
-            query: () => ({
-                url: '/note/category/',
+        getFolder: builder.query<Folder[], {select_space:string}>({
+            query: ({select_space}) => ({
+                url: `/api/${select_space}/folder/`,
                 method: 'GET',
-
+                providesTags: ['NoteFolder']
             }),
         }),
-        getNoteCategorysWithNote: builder.query<NoteCategory, {id:string}>({ // عدد به عنوان id نیاز است
+        getFolderWithNote: builder.query<Folder, {select_space:string,id:string}>({ 
             
-            query: ({id}) => ({
-                url: `/note/category/${id}/`,
+            query: ({select_space,id}) => ({
+                url: `/api/${select_space}/folder/${id}/`,
 
                 method: 'GET',
             }),
@@ -47,6 +52,6 @@ export const apinoteSlice = createApi({
 })
 
 export const {
-    useGetNoteCategorysQuery,
-    useGetNoteCategorysWithNoteQuery,
+    useGetFolderQuery,
+    useGetFolderWithNoteQuery,
 }=apinoteSlice;

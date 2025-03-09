@@ -1,37 +1,45 @@
 import { Modal, Group, NativeSelect, ActionIcon } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useLocalStorage } from "@mantine/hooks";
 import { IconChevronDown, IconSettings } from "@tabler/icons-react";
 import React, { useEffect, useState } from "react";
+import { apinoteSlice, useGetFolderQuery } from "../features/NoteApi";
+import { useDispatch } from "react-redux";
+import { useGetPlaceListQuery } from "../features/Createplace";
 
 const SelectSpace: React.FC = () => {
     const [opened, { open, close }] = useDisclosure(false);
-    const [options, setOptions] = useState<string[]>([]);
-    const [selected, setSelected] = useState<string>("");
-
-    useEffect(() => {
-
     
-        const storedOptions = localStorage.getItem("spaces");
-        console.log(storedOptions);
-        if (storedOptions) {
+    const { data: spaces, error, isLoading } = useGetPlaceListQuery()
+ 
+    const [selected, setSelected] = useLocalStorage({
+        key: 'select_space',
+        defaultValue: '',
+      });
 
-            setOptions(JSON.parse(storedOptions));
-        }
 
-    }, []);
+    const handelspace=(value:string)=>{
 
+        setSelected(value)
+    
+
+    }
+
+    console.log("spaces",spaces);
     return (
         <>
             <Modal opened={opened} onClose={close} title="Authentication">
-                {/* Modal content */}
+                
             </Modal>
+
             <Group style={{ marginTop: "10px" }}>
-                <NativeSelect
+                {spaces  && (
+                    <NativeSelect
                     size="xs"
                     style={{ width: "75%" }}
-                    onChange={(event) => setSelected(event.currentTarget.value)}
-                    data={options.map((item) => ({
-                        value: item.id,
+                    value={selected}
+                    onChange={(event) => handelspace(event.currentTarget.value)}
+                    data={spaces.map((item) => ({
+                        value: String(item.id),
                         label: item.name, 
                     }))}
                     rightSection={
@@ -40,6 +48,7 @@ const SelectSpace: React.FC = () => {
                         </div>
                     }
                 />
+                )}
                 <ActionIcon onClick={open}>
                     <IconSettings size={18} />
                 </ActionIcon>

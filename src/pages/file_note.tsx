@@ -1,11 +1,11 @@
 import React from "react";
 import { NavLink } from "@mantine/core";
 import { Link, useSearchParams } from "react-router-dom";
-import { NoteCategory } from "../features/NoteApi"; // ایمپورت مدل داده‌ها
+import { Folder } from "../features/NoteApi"; // ایمپورت مدل داده‌ها
 
 interface NoteFileProps {
-    data: NoteCategory | null | string;  // داده‌های مربوط به یک دسته
-    notecate: NoteCategory[];  // لیست دسته‌بندی‌ها
+    data: Folder | null | string;  // داده‌های مربوط به یک دسته
+    notecate: Folder[];  // لیست دسته‌بندی‌ها
 }
 
 const NoteFile: React.FC<NoteFileProps> = ({ data, notecate }) => {
