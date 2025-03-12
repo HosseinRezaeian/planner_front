@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
 import { Input, Stack, PasswordInput, Paper, Button, Container } from '@mantine/core';
 

@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { apiSlice } from '../features/TodoApi';
-import { apinoteSlice } from '../features/NoteApi';
+import { apinoteSlice } from '../features/NoteFolderApi';
 import { apiCreatePlace } from '../features/Createplace';
 
 

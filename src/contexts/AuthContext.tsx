@@ -3,6 +3,10 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import baseUrl from "../init";
+import { useDispatch } from "react-redux";
+import { apinoteSlice } from "../features/NoteFolderApi";
+import store from "../store/store";
+import { useLocalStorage } from "@mantine/hooks";
 
 
 interface AuthContextType {
@@ -22,28 +26,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
 
 
+  const [username, setUsername] = useLocalStorage({
+    key: 'username',
+    defaultValue: "",
+});
 
-  const getProfile=(accesstoken:string)=>{
+  const getProfile = (accesstoken: string) => {
 
 
 
-    axios.get(baseUrl+`/api/account/profile/`, {
+    axios.get(baseUrl + `/api/account/profile/`, {
       headers: {
-        'Authorization': 'Bearer '+accesstoken,
+        'Authorization': 'Bearer ' + accesstoken,
       }
     })
-    .then(response => {
-        localStorage.setItem("username", response.data.username);
-        localStorage.setItem("spaces",JSON.stringify( response.data.places));
-        console.log("pll",response.data.places);})
-                .catch(error => {
-          if (error.response && error.response.status === 401) {
-            console.log('Unauthorized! Logging out...');
-            logout(); 
-          }
-        })
-        // setUser(decoded);
-        setIsAuthenticated(true);
+      .then(response => {
+        setUsername( response.data.username);
+
+
+        localStorage.setItem("spaces", JSON.stringify(response.data.places));
+        console.log("pll", response.data.places);
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 401) {
+          console.log('Unauthorized! Logging out...');
+          logout();
+        }
+      })
+    // setUser(decoded);
+    setIsAuthenticated(true);
   }
 
 
@@ -54,13 +65,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.log("tf");
       try {
         getProfile(accessToken);
-   
+
       } catch (error) {
         console.error("توکن نامعتبر است", error);
         logout();
       }
     }
-    else{
+    else {
       setIsAuthenticated(false);
       logout();
     }
@@ -69,18 +80,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const navigate = useNavigate();
 
-
-
+ 
+  
   const login = async (username: string, password: string) => {
     try {
       const response = await axios.post(`${baseUrl}/api/account/token/`, { username, password });
       console.log("✅ درخواست موفق:", response);
- 
+
 
       localStorage.setItem("access", response.data.access);
       localStorage.setItem("refresh", response.data.refresh);
-   
-      
+
+
 
       const decoded: any = jwtDecode(response.data.access);
       getProfile(response.data.access);
@@ -90,7 +101,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch (error: any) {
       console.error("❌ خطای لاگین:", error);
 
-  
+
       localStorage.removeItem("access");
       localStorage.removeItem("refresh");
 
@@ -105,10 +116,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         alert("❌ اتصال به سرور برقرار نشد.");
       }
     }
-};
+  };
 
-
+  const dispatch = useDispatch();
   const logout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    // dispatch(apinoteSlice.util.resetApiState());
+    store.dispatch({ type: 'LOGOUT' });
+    // dispatch(logout());
+    // window.location.reload();
+
+
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
     localStorage.removeItem("spaces");

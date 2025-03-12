@@ -4,13 +4,13 @@ import ForceGraph2D from 'react-force-graph-2d';
 const CustomShapeGraph = () => {
     const graphData = {
         nodes: [
-            { id: 'node1', name: 'Node 1', color: "green" },
+            { id: 'node1', name: 'Node 1', color: "#a17878" },
             { id: 'node2', name: 'Node 2', color: "blue" },
             { id: 'node3', name: 'Node 3', color: "red" },
-            { id: 'node4', name: 'Node 4', color: "blue" },
+            { id: 'node4', name: 'Node 4', color: "#8c00ff" },
             { id: 'node5', name: 'Node 5', color: "green" },
             { id: 'node6', name: 'Node 6', color: "blue" },
-            { id: 'node7', name: 'Node 7', color: "red" },
+            { id: 'node7', name: 'Node 7', color: "#8c00ff" },
             { id: 'node8', name: 'Node 8', color: "blue" },
         ],
         links: [
@@ -24,6 +24,7 @@ const CustomShapeGraph = () => {
             { source: 'node8', target: 'node2' },
             { source: 'node6', target: 'node1' },
             { source: 'node6', target: 'node2' },
+            { source: 'node5', target: 'node1' },
         ],
     };
 

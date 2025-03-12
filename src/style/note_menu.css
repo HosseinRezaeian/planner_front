@@ -18,9 +18,9 @@
   
 }
 
-/* فایل CSS شما */
+
 .notes:hover {
-    background-color: transparent !important; /* غیرفعال کردن تغییر پس‌زمینه در hover */
-    color: inherit !important; /* غیرفعال کردن تغییر رنگ متن در hover */
+    background-color: transparent !important; 
+    color: inherit !important; 
   }
   

@@ -1,8 +1,19 @@
-.active-link {
-    color: green;
-    font-weight: bold;
-  }
-  
-  .inactive-link {
-    color: gray;
-  }
+.note{
+  display: block;
+  color: black;
+  text-decoration: none;
+
+  /* font-size: 30px; */
+  padding: 4px 8px; /* Reduce padding */
+  font-size: 14px;  /* Adjust text size */
+  min-width: auto; 
+  align-items: center; 
+  /* gap: 4px; */
+  transition: background 0.2s;
+}
+
+
+.note:hover {
+  background-color: transparent !important; 
+  color: inherit !important; 
+}

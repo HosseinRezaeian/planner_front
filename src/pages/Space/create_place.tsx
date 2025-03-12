@@ -1,6 +1,6 @@
 import { TextInput, Stack, Container, Paper, Button } from "@mantine/core";
 import React, { useState } from "react";
-import { useCreatePlaceMutation } from "../features/Createplace";
+import { useCreatePlaceMutation } from "../../features/Createplace";
 import { Navigate } from "react-router-dom";
 
 const CreatePlace: React.FC = () => {
@@ -17,7 +17,7 @@ const CreatePlace: React.FC = () => {
         }
     };
 
-    // اگر redirect مقدار true داشته باشد، هدایت انجام می‌شود
+    
     if (redirect) {
         return <Navigate to="/" replace />;
     }
@@ -28,8 +28,8 @@ const CreatePlace: React.FC = () => {
                 <Stack>
                     <TextInput
                         label="Name Space"
-                        onChange={(e) => setPlaceName(e.target.value)}
-                    />
+                        onChange={(e) => setPlaceName(e.target.value)}/>
+                        
                     <Button onClick={createPlace}>Create Space</Button>
                 </Stack>
             </Paper>
