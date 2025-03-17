@@ -1,92 +1,98 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useGetNotewithIdQuery, usePatchNotewithIdMutation } from "../../features/NoteFolderApi";
+import { useGetNotewithIdQuery, usePatchContentNoteMutation, usePatchNotewithIdMutation } from "../../features/NoteFolderApi";
 import { useLocalStorage } from "@mantine/hooks";
-import { Button, Group, Paper, Stack, Text, TextInput, Textarea } from "@mantine/core";
-// import { Input } from "postcss";
+import { ActionIcon, Button, Group, Paper, Stack, Tabs, Text, TextInput, Textarea, ThemeIcon } from "@mantine/core";
 
+
+
+import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown";
+import { IconColumns2, IconSpacingHorizontal } from "@tabler/icons-react";
+import "../../style/note.css"
+import RichTextEditor from "./components/textEditor";
+import MarkdownEdit from "./components/textMarkdown";
+import TextEditor from "./components/textEditor";
+import CheckBoxText from "./components/textCheckbox";
+
+
+// import { Editor, EditorState } from 'draft-js';
+// import 'draft-js/dist/Draft.css';
 
 
 const NoteOpen: React.FC = () => {
     const { id } = useParams();
-    const [selected, setSelected] = useLocalStorage({
+    const { folder } = useParams();
+    const [selectedSpace, setSelectedSpace] = useLocalStorage({
         key: 'select_space',
         defaultValue: "",
     });
+    const [selected_folder, setSelectedFolder] = useLocalStorage<string>({
+        key: 'select_folder',
+        defaultValue: '',
+    });
     const [patchNote] = usePatchNotewithIdMutation();
-    const { data } = useGetNotewithIdQuery({ select_space: selected, id: id ?? "" },
+    const { data } = useGetNotewithIdQuery({ select_space: selectedSpace, folder_id: String(folder), id: id ?? "" },
         { skip: !id });
 
- 
-    const old_name=data?.name;
-    const old_note_value=data?.content
-    const [name, setName] = useState("")
-    const [value, setValue] = useState("")
+    const [patchNoteContent] = usePatchContentNoteMutation();
 
+
+    const old_name = data?.name;
+    const old_note_value = data?.content;
+
+    const [name, setName] = useState("");
+    const [value, setValue] = useState("");
 
     useEffect(() => {
-        if (data) {
-            setName(data.name || "");  // Avoid undefined
-            setValue(data.content || "");
-        }
-    }, [data]);
-
+        setName(String(data?.name))
+    }, [data])
 
 
     const handelSave = () => {
-        const send_data: Record<string, any> = {};
-        if (name.trim() !== "") {
-            send_data.name = name;
-        }
-        if (value.trim() !== "") {
-            send_data.content = value;
-        }
-        if (Object.keys(send_data).length > 0) {
-            patchNote({ id: id ?? "", select_space: selected, data: send_data })
-        }
-
+        patchNote({ folder_id: folder ?? "default_folder", select_space: selectedSpace, id: String(data?.id), data: { name: name } })
     }
 
 
+    const handelContent = (content_id: string, data: any) => {
+        patchNoteContent({ folder_id: String(folder), select_space: selectedSpace, note: String(id), id: content_id, data: data })
+    }
 
     return (
-
-
         <Stack>
             <Group justify="space-between" w="100%">
-                <h2>                <TextInput value={name} variant="unstyled" size="xl"  onChange={(event) => setName(event.currentTarget.value)}></TextInput>
-                </h2>                {name != old_name || value != old_note_value ? (<Button onClick={handelSave}>save</Button>) : ""}
-
-            </Group>
-            <div>
-                <p>folder:{data?.folder}</p>
-                <p>create date:{data?.created_at}</p>
-                <p>update date:{data?.updated_at}</p>
-            </div>
-            <Group>
+                <h1>
+                    <TextInput value={name} variant="unstyled" size="xl" onChange={(event) => setName(event.currentTarget.value)} />
+                    {name !== old_name ? (<Button onClick={handelSave}>save</Button>) : ""}
+                </h1>
+                {/* <RichTextEditor /> */}
             </Group>
 
-            <iframe 
-            src="http://localhost:3000/graph/org" 
-            width="800" 
-            height="600" 
-            style={{ border: "1px solid black" }} 
-        />
-            <Textarea
-                value={value}
-                size="md"
-                autosize
-                onChange={(event) => setValue(event.currentTarget.value)}
-                minRows={30}
+
+            {data &&
+                data.content.map((item) =>
+                    item.filed_type == "md" ? (
+                        <div className="note-box">
+                            <MarkdownEdit onChange={handelContent} id={item.id} value={item.content} />
+                        </div>
+                    ) : item.filed_type == "checkbox" ? (
 
 
-            ></Textarea>
+                        <div className="note-box">
+                            <CheckBoxText id={item.id} value={item.content} check={item.is_checked} onChange={handelContent} />
+                        </div>
+
+                    ) : item.filed_type == "text" ? (
+                        <div className="note-box">
+                            <TextEditor onChange={handelContent} id={item.id} value={item.content} />
+                        </div>
+                    ) : (
+                        <p>i cant find type this!!!</p>
+                    )
+                )}
+
         </Stack>
 
-
-    )
-
-
+    );
 }
-
 export default NoteOpen;

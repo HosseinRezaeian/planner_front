@@ -1,32 +1,33 @@
-import { useState } from "react";
+import { ReactNode } from "react";
 import { IconChevronDown, IconChevronRight } from "@tabler/icons-react";
 import { Button } from "@mantine/core";
-import "../style/folder.css"
+import "../style/folder.css";
+
 interface DropdownProps {
-    label: string;
-    id?: string;
-    children?: React.ReactNode;
+    children?: ReactNode;
+    isOpen: boolean;  // ✅ دریافت وضعیت باز/بسته بودن
+    setIsOpen: (open: boolean) => void; // ✅ تابعی برای تغییر وضعیت
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ label, id, children }) => {
-    const [isOpen, setIsOpen] = useState(false);
+const Dropdown: React.FC<DropdownProps> = ({ children, isOpen, setIsOpen }) => {
+    const childrenArray = Array.isArray(children) ? children : [children];
+    const [parent, ...childElements] = childrenArray;
 
     return (
         <div className="relative">
-            <Button
-                onClick={() => setIsOpen(!isOpen)}
-                variant="subtle"
-                className="dropdown"
-            >
-                {label}
+            {parent && (
+                <Button
+                    onClick={() => setIsOpen(!isOpen)}  // ✅ کنترل باز/بسته شدن
+                    variant="subtle"
+                    className="dropdown"
+                >
+                    {parent}
+                    {isOpen ? <IconChevronDown /> : <IconChevronRight />}
+                </Button>
+            )}
 
-                {isOpen ? <IconChevronDown /> : <IconChevronRight />}
-            </Button>
-
-            {isOpen && (
-                <div className="children" >
-                    {children}
-                </div>
+            {isOpen && childElements.length > 0 && (
+                <div className="children">{childElements}</div>
             )}
         </div>
     );

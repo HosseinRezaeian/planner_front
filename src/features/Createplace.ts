@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import baseQueryAccessToken from './baseQuery';
+
+import baseQueryWithReAuth from './baseQueryAccessToken';
 
 export interface Space {
     id: string;
@@ -9,7 +10,7 @@ export interface Space {
 }
 export const apiCreatePlace = createApi({
     reducerPath:'Place',
-    baseQuery: baseQueryAccessToken,
+    baseQuery: baseQueryWithReAuth,
     tagTypes: ['Places'],
     
 

@@ -26,8 +26,8 @@ const MenuAppshell: React.FC = () => {
 
             <AvatarProfile />
             <SelectSpace/>
-            <NavLink to="/" className="nav-link" onClick={close}>🏠 Home</NavLink>
-            <NavLink to="/folder" className="nav-link" onClick={closeMenu}>note view</NavLink>
+            {/* <NavLink to="" className="nav-link" onClick={close}>🏠 Home</NavLink> */}
+            <NavLink to="/calendar" className="nav-link" onClick={close}> calendar</NavLink>
             <NoteMenu/>
             <NavLink to="/graph" className="nav-link" onClick={closeMenu}>📊 Graph</NavLink>
             <LoginORLogout />

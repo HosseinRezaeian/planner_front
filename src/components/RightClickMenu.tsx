@@ -36,7 +36,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({ position, onClose, items, tar
         >
             <Menu shadow="md" width={200} opened>
                 {items.map((item, index) => (
-                    <Menu.Item key={index} onClick={() => item.action(targetId)}>
+                    <Menu.Item key={index} onClick={() => item.action(targetId||"")}>
                         {item.label}
                     </Menu.Item>
                 ))}

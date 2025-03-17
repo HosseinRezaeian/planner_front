@@ -15,4 +15,5 @@ export default defineConfig({
     strictPort: true,
     allowedHosts: ['a855-104-131-169-232.ngrok-free.app',"*"], // اینجا دامنه مورد نظر رو اضافه کن
   }
+  
 });

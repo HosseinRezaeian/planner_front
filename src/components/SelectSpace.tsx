@@ -12,7 +12,7 @@ const SelectSpace: React.FC = () => {
     });
     const [patchPlace] = usePatchPlaceMutation();
 
-    const [selected, setSelected] = useLocalStorage({
+    const [selectedSpace, setSelectedSpace] = useLocalStorage({
         key: 'select_space',
         defaultValue: "",
     });
@@ -21,7 +21,7 @@ const SelectSpace: React.FC = () => {
 
         if (spaces && spaces.length > 0) {
             const selectedSpace = spaces.find((item) => item.select)?.id || spaces[0]?.id;
-            setSelected(selectedSpace);
+            setSelectedSpace(selectedSpace);
         }
     }, [spaces]); 
 
@@ -33,7 +33,7 @@ const SelectSpace: React.FC = () => {
     }
 
     const handelspace = (value: string) => {
-        setSelected(value);
+        setSelectedSpace(value);
         patchPlace({ id: value, data: { "select": true } });
     };
 
@@ -59,7 +59,7 @@ const SelectSpace: React.FC = () => {
                     <NativeSelect
                         size="xs"
                         style={{ width: "75%" }}
-                        value={selected}
+                        value={selectedSpace}
                         onChange={(event) => handelspace(event.currentTarget.value)}
                         data={spaces.map((item) => ({
                             value: String(item.id),

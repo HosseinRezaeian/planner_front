@@ -4,12 +4,16 @@ import Login from "../pages/Users/Login";
 import AppView from "../pages/Appshell/AppShell";
 import { AuthProvider } from "../contexts/AuthContext";
 import ProtectedRoute from "./ProtectedRoute";
-import Todo from "../pages/Todo";
+// import Todo from "../pages/Todo";
 import DisjointGraph from "../pages/graph";
 
 import CreatePlace from "../pages/Space/create_place";
 import NoteOpen from "../pages/Notes/note";
 import ContextMenu from "../pages/test_rightclickmenu";
+import Mark from "../pages/test_md";
+import Calendar from "../pages/calendar";
+import DropDND from "../pages/dropdown";
+
 
 // import { theme } from "./theme"; 
 const auth = { isAuthenticated: false }; // Change to true for testing
@@ -25,25 +29,31 @@ export default function Router() {
 
                         <Routes>
                             <Route path="login" element={<Login />} />
-                            <Route path="create-place" element={<CreatePlace/>} />
-                            <Route path="graph/org" element={<DisjointGraph/>} />
-                            
-                            
+                            <Route path="create-place" element={<CreatePlace />} />
+                            <Route path="graph/org" element={<DisjointGraph />} />
+
+
+
                             <Route path="/" element={
                                 <ProtectedRoute>
                                     <AppView />
                                 </ProtectedRoute>
                             } >
                                 <Route index element={<h1>Home</h1>} />
-                                <Route path="todo" element={<Todo/>} />
+                                {/* <Route path="todo" element={<Todo />} /> */}
+                                <Route path="calendar" element={<Calendar />} />
                                 {/* <Route path="note" element={<Note/>} /> */}
-                                <Route path="graph" element={<DisjointGraph/>} />
+                                <Route path="graph" element={<DisjointGraph />} />
+                                <Route path="dnd" element={<DropDND/>} />
                                 {/* <Route path="note/:id" element={<Note/>} /> */}
 
-                                <Route path="note/:id" element={<NoteOpen/>} />
+                                <Route path=":folder/note/:id" element={<NoteOpen />} />
+                                <Route path="mark" element={<Mark>{`
+
+    `}</Mark>} />
                                 {/* <Route path="menu" element={<ContextMenu/>} /> */}
 
-                                
+
                             </Route>
 
                         </Routes>
