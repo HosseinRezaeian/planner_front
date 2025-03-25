@@ -23,5 +23,36 @@
   background-color: #ddd;
   border: "1px solid #ddd";
   padding: 8px;
+  margin: 8px;
   border-radius: 5px;
+}
+.note-contents{
+  position: relative;
+  padding-bottom: 70px;
+}
+.fixed-box {
+  width: 80%;
+  position: fixed;  
+  bottom: 20px;    
+  left: 56%;        
+  transform: translateX(-50%);  
+  background: #373535;  
+  color: white;     
+  padding: 10px 20px;
+  border-radius: 48px;
+  z-index: 5;    
+  text-align: center;
+}
+
+.add-btn{
+  width:30%;
+}
+@media (max-width: 768px) {
+  .fixed-box {   
+    left: 50%;  
+    width: 90%;
+  }
+  .add-btn{
+    width:28%;
+  }
 }

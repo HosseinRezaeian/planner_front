@@ -40,18 +40,16 @@ export default function Router() {
                                 </ProtectedRoute>
                             } >
                                 <Route index element={<h1>Home</h1>} />
-                                {/* <Route path="todo" element={<Todo />} /> */}
+
                                 <Route path="calendar" element={<Calendar />} />
-                                {/* <Route path="note" element={<Note/>} /> */}
+
                                 <Route path="graph" element={<DisjointGraph />} />
-                                <Route path="dnd" element={<DropDND/>} />
-                                {/* <Route path="note/:id" element={<Note/>} /> */}
+                                <Route path="dnd" element={<DropDND />} />
+
 
                                 <Route path=":folder/note/:id" element={<NoteOpen />} />
-                                <Route path="mark" element={<Mark>{`
+             
 
-    `}</Mark>} />
-                                {/* <Route path="menu" element={<ContextMenu/>} /> */}
 
 
                             </Route>

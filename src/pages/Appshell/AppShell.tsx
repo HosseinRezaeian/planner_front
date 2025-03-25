@@ -38,7 +38,7 @@ function AppView() {
 
             <AppShell.Main style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                 <Group>
-                    <Burger opened={opened} onClick={() => setOpened((prev) => !prev)} hiddenFrom="sm" size="sm" />
+                    <Burger className="burger" opened={opened} onClick={() => setOpened((prev) => !prev)} hiddenFrom="sm" size="sm" />
 
                 </Group>
                 <>

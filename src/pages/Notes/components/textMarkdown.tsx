@@ -55,7 +55,8 @@ const MarkdownEdit: React.FC<InputWatcherProps> = ({ value, id, onChange }) => {
                             border: "1px solid #ddd",
                             borderRadius: "8px",
                             backgroundColor: "#f9f9f9",
-                            overflowY: "auto"
+                            overflowY: "auto",
+                            padding:"10px"
                         }}
                     >
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>{inputValue}</ReactMarkdown>

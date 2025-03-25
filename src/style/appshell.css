@@ -37,3 +37,17 @@
     color: white;
     font-weight: bold;
 }
+
+
+.burger{
+
+    position: fixed;  
+   top: 2%;
+    left: 3%;        
+    /* transform: translateX(-50%);   */
+    background: whitesmoke;  
+    /* color: white;       */
+
+    z-index: 5;    
+    /* text-align: center; */
+}

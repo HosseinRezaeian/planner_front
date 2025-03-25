@@ -111,7 +111,14 @@ export const apinoteSlice = createApi({
         }),
 
 
-
+        CreateNoteContent: builder.mutation<Note, { select_space: string,folder_id: string, note:String,data: Partial<NoteContent> }>({
+            query: ({ select_space,folder_id,note,  data}) => ({
+                url: `/api/${select_space}/folders/${folder_id}/notes/${note}/content/`,
+                method: 'POST',
+                body: data
+            }),
+            invalidatesTags: ['note']
+        }),
 
         PatchContentNote: builder.mutation<Note, { select_space: string,note:string,folder_id: string,id:string, data: Partial<NoteContent> }>({
             query: ({ select_space,note,folder_id,id,  data}) => ({
@@ -122,7 +129,13 @@ export const apinoteSlice = createApi({
             invalidatesTags: ['note']
         }),
 
-
+        DeleteNoteContent: builder.mutation<void, { select_space: string;folder_id:String; note:string;id: string }>({
+            query: ({ select_space,folder_id,note, id }) => ({
+                url: `/api/${select_space}/folders/${folder_id}/notes/${note}/content/${id}/`,  // Assuming your backend follows RESTful structure
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['note'], // This ensures the cache is updated
+        }),
 
 
     })
@@ -140,7 +153,8 @@ export const {
     useCreateNoteMutation,
     useDeleteNoteMutation,
 
-
+    useCreateNoteContentMutation,
     usePatchContentNoteMutation,
+    useDeleteNoteContentMutation,
   
 } = apinoteSlice;
